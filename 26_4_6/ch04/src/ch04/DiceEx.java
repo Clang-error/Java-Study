@@ -6,7 +6,7 @@ public class DiceEx {
     public DiceEx() {
         for(int i = 0; i < 100; i++) {
             dice.rolling();
-//            dice.face = 7;
+//            dice.face = 7;d
             System.out.println(dice);
         }
     }
