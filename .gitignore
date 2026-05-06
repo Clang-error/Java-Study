@@ -1,0 +1,17 @@
+# Compiled
+out/
+bin/
+*.class
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.metadata/
+.settings/
+.classpath
+.project
+
+# macOS
+.DS_Store
