@@ -16,3 +16,6 @@ bin/
 # macOS
 .DS_Store
 Report Result
+
+# Agent
+.junie/
