@@ -2,6 +2,10 @@ package Report;
 
 class SetString {
     String str;
+    int vowel=0;
+    int beCount=0;
+    String[] words;
+    int idx = 0;
     SetString(int a) {
         if (a == 0)
             this.str = "Only I can change me life, no one can do it for me.";
@@ -15,6 +19,14 @@ class SetString {
             this.str="A day without laughter is a day wasted. ";
     }
 
+    public String toString() {
+        String beWords = String.join(", ", words);
+        if(beCount==0)
+            return this.str+"\n 이 문장에는 "+this.vowel+"개의 모음이 존재하며, be동사는 존재하지 않습니다.\n";
+        else
+            return this.str+"\n 이 문장에는 "+this.vowel+"개의 모음이 존재하며, " + beCount +"개의 be동사가 존재합니다. be동사는 "+ beWords + "입니다.\n";
+
+    }
 }
 
 class CompareString {
@@ -35,7 +47,7 @@ class CompareString {
             }
         }
 
-        System.out.println("가장 긴 문장은: " + arr[pointers].str +" 입니다.");
+        System.out.println("가장 긴 문장은: " + arr[pointers].str +" 입니다.\n");
     }
 
 }
@@ -53,10 +65,9 @@ class VowelCount {
                         arr[i].str.charAt(j) == 'e' || arr[i].str.charAt(j) == 'E' ||
                         arr[i].str.charAt(j) == 'i' || arr[i].str.charAt(j) == 'I' ||
                         arr[i].str.charAt(j) == 'o' || arr[i].str.charAt(j) == 'O' ||
-                        arr[i].str.charAt(j) == 'u' || arr[i].str.charAt(j) == 'U');
-                vowel++;
+                        arr[i].str.charAt(j) == 'u' || arr[i].str.charAt(j) == 'U') vowel++;
             }
-            System.out.println("\n "+arr[i].str + "\n 모음 개수는 " + vowel +"개 입니다.");
+            arr[i].vowel = vowel;
         }
     }
 }
@@ -71,21 +82,25 @@ class WhichBe {
             int beCount = 0;
             String[] words = arr[i].str.split(" ");
             for (int j = 0; j < words.length; j++) {
-                if(words[j].equals("be") || words[j].equals("am") || words[j].equals("is")||
-                        words[j].equals("are")|| words[j].equals("was")|| words[j].equals("were")) {
-                            beCount++;
+                if (words[j].equals("be") || words[j].equals("am") || words[j].equals("is") ||
+                        words[j].equals("are") || words[j].equals("was") || words[j].equals("were")) {
+                    beCount++;
                 }
             }
-            if(beCount==0) {
-                System.out.println("\n"+arr[i].str + "\n이 문장에는 be동사가 없습니다.");
-            } else {
-                System.out.println("\n"+arr[i].str + "\n이 문장에는 "+beCount+"개의 be동사가 존재합니다.");
+            arr[i].words = new String[beCount];
+            arr[i].beCount = beCount;
+            for (int j = 0; j < words.length; j++) {
+                if (words[j].equals("be") || words[j].equals("am") || words[j].equals("is") ||
+                        words[j].equals("are") || words[j].equals("was") || words[j].equals("were")) {
+                    arr[i].words[arr[i].idx++] = words[j];
+                }
             }
         }
     }
 }
 
 public class StringEx {
+
     public static void main(String[] args) {
         SetString[] arr = new SetString[5]; //배열 선언
         for (int i = 0; i < arr.length; i++) { //배열 요소 초기화
@@ -94,9 +109,12 @@ public class StringEx {
         CompareString cs = new CompareString(arr);
         VowelCount vc = new VowelCount(arr);
         WhichBe wb = new WhichBe(arr);
-//        cs.compare();
-//        vc.count();
+        cs.compare();
+        vc.count();
         wb.CheckBe();
+        for (SetString setString : arr) {
+            System.out.println(setString);
+        }
     }
 }
 
